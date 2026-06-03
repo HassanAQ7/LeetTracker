@@ -7,5 +7,5 @@ public record class CreateProblemDto(
     [Required][StringLength(100)] string Title,
     [Required] string Difficulty,
     [Required] string Category,
-    bool Status
+    string Status
 );

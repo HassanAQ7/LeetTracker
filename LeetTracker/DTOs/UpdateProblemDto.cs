@@ -6,5 +6,5 @@ public record class UpdateProblemDto(
     [StringLength(100)] string Title,
     string Difficulty,
     string Category,
-    bool Status 
+    string Status 
 );
