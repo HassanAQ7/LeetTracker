@@ -57,7 +57,7 @@ public class ProblemService(AppDbContext context)
         return result;
     }
 
-    public async Task<ProblemResponse?> updateProblemById(int id, UpdateProblemDto problem)
+    public async Task<ProblemResponse?> UpdateProblemById(int id, UpdateProblemDto problem)
     {
         var problemToUpdate = await context.Problems.FindAsync(id);
         if (problemToUpdate is null)
@@ -79,7 +79,7 @@ public class ProblemService(AppDbContext context)
 
     }
 
-    public async Task<bool> deleteProblem(int id)
+    public async Task<bool> DeleteProblem(int id)
     {
         var problemToDelete = await context.Problems.FindAsync(id);
         if (problemToDelete is null)
