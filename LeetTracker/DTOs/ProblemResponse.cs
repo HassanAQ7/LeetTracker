@@ -5,5 +5,5 @@ public record class ProblemResponse(
     string Title,
     string Difficulty,
     string Category,
-    string Status
+    string? Status
 );
