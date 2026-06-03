@@ -1,40 +1,53 @@
-LeetTracker
+# LeetTracker
+
 A REST API for tracking LeetCode-style problems — title, difficulty, category, and status — backed by PostgreSQL.
 
-Tech Stack
-.NET 10 (ASP.NET Core Web API)
-Entity Framework Core + PostgreSQL
-Docker (optional, for local database)
-Prerequisites
-.NET 10 SDK
+## Tech Stack
 
-Docker Desktop (recommended for Postgres)
+- .NET 10 (ASP.NET Core Web API)
+- Entity Framework Core + PostgreSQL
+- Docker (optional, for local database)
 
-EF Core CLI (for migrations):
+## Prerequisites
 
+- [.NET 10 SDK](https://dotnet.microsoft.com/download)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (recommended for Postgres)
+- EF Core CLI (for migrations):
+
+```bash
 dotnet tool install --global dotnet-ef
-Getting Started
-1. Clone the repo
+```
+
+## Getting Started
+
+### 1. Clone the repo
+
+```bash
 git clone <your-repo-url>
 cd LeetTracker
-2. Start PostgreSQL
+```
+
+### 2. Start PostgreSQL
+
 From the repo root:
 
+```bash
 docker compose up -d
-This starts Postgres on port 5432 with:
+```
 
-Setting	Value
-Database
-leettracker
-User
-postgres
-Password
-password
-3. Configure the connection string
-appsettings.json ships with an empty connection string on purpose. You must set your database URL before running the app.
+This starts Postgres on port **5432** with:
 
-Create LeetTracker/appsettings.Development.json (this file is gitignored):
+- **Database:** `leettracker`
+- **User:** `postgres`
+- **Password:** `password`
 
+### 3. Configure the connection string
+
+`appsettings.json` ships with an empty connection string on purpose. **You must set your database URL before running the app.**
+
+Create `LeetTracker/appsettings.Development.json` (this file is gitignored):
+
+```json
 {
   "ConnectionStrings": {
     "DefaultConnection": "Host=localhost;Port=5432;Database=leettracker;Username=postgres;Password=password"
@@ -46,62 +59,76 @@ Create LeetTracker/appsettings.Development.json (this file is gitignored):
     }
   }
 }
-Adjust Host, Port, Database, Username, and Password to match your Postgres setup.
+```
 
-For non-Development environments, set ConnectionStrings:DefaultConnection in appsettings.json, environment variables, or your deployment config instead.
+Adjust `Host`, `Port`, `Database`, `Username`, and `Password` to match your Postgres setup.
 
-4. Apply database migrations
+For non-Development environments, set `ConnectionStrings:DefaultConnection` in `appsettings.json`, environment variables, or your deployment config.
+
+### 4. Apply database migrations
+
+```bash
 cd LeetTracker
 dotnet ef database update
-Run this once (and again whenever new migrations are added).
+```
 
-5. Run the API
+Run this once, and again whenever new migrations are added.
+
+### 5. Run the API
+
+```bash
 dotnet run
-Default URL: http://localhost:5058
+```
+
+Default URL: **http://localhost:5058**
 
 HTTPS profile (optional):
 
+```bash
 dotnet run --launch-profile https
-OpenAPI document (Development only): http://localhost:5058/openapi/v1.json
+```
 
-API Endpoints
-Base path: /api/problems
+OpenAPI document (Development only): **http://localhost:5058/openapi/v1.json**
 
-Method	Endpoint	Description
-GET
-/api/problems
-List all problems
-GET
-/api/problems/{id}
-Get problem by ID
-POST
-/api/problems
-Create a problem
-PUT
-/api/problems/{id}
-Update a problem
-DELETE
-/api/problems/{id}
-Delete a problem
-Request / response shape
-Create (POST) — CreateProblemDto
+## API Endpoints
 
+Base path: `/api/problems`
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/problems` | List all problems |
+| GET | `/api/problems/{id}` | Get problem by ID |
+| POST | `/api/problems` | Create a problem |
+| PUT | `/api/problems/{id}` | Update a problem |
+| DELETE | `/api/problems/{id}` | Delete a problem |
+
+### Request / response shape
+
+**Create (POST)** — `CreateProblemDto`
+
+```json
 {
   "title": "Two Sum",
   "difficulty": "Easy",
   "category": "Array",
   "status": "Todo"
 }
-Update (PUT) — UpdateProblemDto
+```
 
+**Update (PUT)** — `UpdateProblemDto`
+
+```json
 {
   "title": "Two Sum",
   "difficulty": "Medium",
   "category": "Hash Table",
   "status": "Done"
 }
-Response — ProblemResponse
+```
 
+**Response** — `ProblemResponse`
+
+```json
 {
   "id": 1,
   "title": "Two Sum",
@@ -109,8 +136,11 @@ Response — ProblemResponse
   "category": "Array",
   "status": "Todo"
 }
-Project Structure
+```
 
+## Project Structure
+
+```
 LeetTracker/
 ├── Controllers/     # API endpoints
 ├── Data/            # EF Core DbContext
@@ -120,3 +150,4 @@ LeetTracker/
 ├── Services/        # Business logic
 ├── Program.cs       # App setup & DI
 └── appsettings.json
+```
